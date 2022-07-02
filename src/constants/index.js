@@ -1,0 +1,1 @@
+export const NOME_EMPRESA = "Bihands"
