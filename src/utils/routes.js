@@ -4,6 +4,7 @@ import { Context } from "../context/authContext";
 import Admin from "../pages/admin/admin";
 import Colaboradores from "../pages/colaboradores/colaboradores";
 import Dashboard from "../pages/dashboard/dashboard";
+import Kanban from "../pages/kanban/kanban";
 import Login from "../pages/login/login";
 
 const Routes = () => {
@@ -45,6 +46,7 @@ const Routes = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/colaboradores" element={<Colaboradores />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/kanban" element={<Kanban />} />
     </BrowserRouter>
   );
 };

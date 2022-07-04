@@ -17,22 +17,21 @@ import BuildIcon from "@mui/icons-material/Build";
 const Header = () => {
   const [cadastroOpen, setCadastroOpen] = React.useState(false);
   const [anchor, setAnchor] = React.useState(false);
-  const [admin, setAdmin] = React.useState(false)
+  const [admin, setAdmin] = React.useState(false);
 
   const clickCadastro = (event) => {
     setAnchor(event.currentTarget);
     setCadastroOpen(true);
   };
 
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   React.useEffect(() => {
     if (token == 0) {
-      setAdmin(true)
+      setAdmin(true);
     }
-    }, [])
+  }, []);
 
-  
   const fechaMenu = () => {
     setAnchor(null);
     setCadastroOpen(false);
@@ -61,12 +60,8 @@ const Header = () => {
             {NOME_EMPRESA}
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={2}
-            >
+          <Box sx={{ flexGrow: 1, gap: 2, display: { xs: "none", md: "flex" } }}>
+           
               <Button
                 component={Link}
                 to="/dashboard"
@@ -83,21 +78,25 @@ const Header = () => {
               >
                 Cadastros
               </Button>
-              <Button sx={{ my: 2, color: "white", display: "block" }}>
-                Kanban
+              <Button
+               component={Link}
+               to="/kanban"
+                sx={{ my: 2, color: "white", display: "block" }}
+              >Kanban
               </Button>
-            </Stack>
-          </Box>
-          {admin && (<Box sx={{ flexGrow: 0, display: "flex" }}>
-            <Button
-              sx={{ my: 2, color: "white" }}
-              startIcon={<BuildIcon />}
-              component={Link}
-              to="/admin"
-            >
-              Configurações
-            </Button>
-          </Box>)}
+           </Box>
+          {admin && (
+            <Box sx={{ flexGrow: 0, display: "flex" }}>
+              <Button
+                sx={{ my: 2, color: "white" }}
+                startIcon={<BuildIcon />}
+                component={Link}
+                to="/admin"
+              >
+                Configurações
+              </Button>
+            </Box>
+          )}
         </Toolbar>
         <Menu
           id="menuCadastro"
