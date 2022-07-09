@@ -3,13 +3,18 @@ import {
   Card,
   CardActions,
   CardContent,
+  LinearProgress,
+  linearProgressClasses,
+  styled,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
+import { BorderLinearProgress } from "./styles";
 
 const KanbanCard = ({ cardInfo }) => {
+  const progresso = (cardInfo.processo_atual / cardInfo.processo_final) * 100;
   const [{ isDragging }, drag] = useDrag(() => ({
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: ItemTypes.CARD,
@@ -29,10 +34,10 @@ const KanbanCard = ({ cardInfo }) => {
   }));
   const opacity = isDragging ? 0.4 : 1;
   return (
-    <Card ref={drag} sx={{ minWidth: "275", opacity }}>
+    <Card ref={drag} sx={{ minWidth: "275", opacity, mt: 2 }}>
       <CardContent>
         <Typography variant="h5" component="div">
-          Pedido {cardInfo.id}
+          Pedido #{cardInfo.id}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Colaborador {cardInfo.colaborador}
@@ -40,6 +45,7 @@ const KanbanCard = ({ cardInfo }) => {
         <Typography variant="body2">
           Status processo: {cardInfo.processo_atual}/{cardInfo.processo_final}
         </Typography>
+        <BorderLinearProgress variant="determinate" value={progresso} />
       </CardContent>
       <CardActions>
         <Button size="small">Informações</Button>

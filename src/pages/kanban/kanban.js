@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { DndProvider } from "react-dnd";
 
@@ -6,8 +6,9 @@ import Header from "../../components/Header/Header";
 import KanbanCard from "./kanbanCard";
 
 import { HTML5Backend } from "react-dnd-html5-backend";
-import update from "immutability-helper";
 import ProcessoPaper from "./processoPaper";
+
+import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 
 const Kanban = () => {
   const [cards, setCards] = useState([
@@ -20,35 +21,28 @@ const Kanban = () => {
     {
       id: 2,
       colaborador: "Fulano",
-      processo_atual: 1,
-      processo_final: 10,
+      processo_atual: 45,
+      processo_final: 93,
     },
     {
       id: 3,
       colaborador: "Beltrano",
-      processo_atual: 1,
-      processo_final: 10,
+      processo_atual: 22,
+      processo_final: 60,
     },
   ]);
 
-  const moveCard = (dragIndex, hoverIndex) => {
-    const dragCard = cards[dragIndex];
-    setCards(
-      update(cards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, dragCard],
-        ],
-      })
-    );
-  };
   return (
     <>
       <Header />
       <Container>
-        <Typography variant="h3" sx={{ marginTop: 2 }}>
-          Kanban
+        <Box sx={{display:"flex", justifyContent: "space-between"}}>
+          <Typography variant="h3" sx={{ marginTop: 2 }}>
+            Kanban
+          </Typography>
+          <Typography sx={{my: "auto"}}>Última atualização: {new Date().toLocaleString('pt-br')}<Button size="small" startIcon={<CachedOutlinedIcon />} />
         </Typography>
+          </Box>
 
         <Box
           component="div"
@@ -57,8 +51,8 @@ const Kanban = () => {
             display: "flex",
             my: 2,
             p: 1,
-            border: "1px solid",
-            borderRadius: 2,
+            //border: "1px solid",
+            //borderRadius: 2,
             gap: 2,
           }}
         >
@@ -74,10 +68,19 @@ const Kanban = () => {
               <Typography>Processo 3</Typography>
             </Paper> */}
             <ProcessoPaper processo="Processo 1">
-                <KanbanCard cardInfo={cards[0]} />
+              <KanbanCard cardInfo={cards[0]} />
+              <KanbanCard cardInfo={cards[2]} />
             </ProcessoPaper>
             <ProcessoPaper processo="Processo 2"></ProcessoPaper>
-            <ProcessoPaper processo="Processo 3"></ProcessoPaper>
+            <ProcessoPaper processo="Processo 3">
+              <KanbanCard cardInfo={cards[1]} />
+            </ProcessoPaper>
+            <ProcessoPaper processo="Processo 4">
+              <KanbanCard cardInfo={cards[1]} />
+            </ProcessoPaper>
+            <ProcessoPaper processo="Processo 5">
+              <KanbanCard cardInfo={cards[1]} />
+            </ProcessoPaper>
           </DndProvider>
         </Box>
       </Container>

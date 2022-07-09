@@ -32,12 +32,12 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import LoopIcon from '@mui/icons-material/Loop';
+import LoopIcon from "@mui/icons-material/Loop";
 
-import { modalStyle } from "./styles";
+import { modalStyle, StyledTableCell, StyledTableRow } from "./styles";
 
 const Colaboradores = () => {
   const [token, setToken] = useState("teste");
@@ -45,9 +45,11 @@ const Colaboradores = () => {
   const [colabTypes, setColabTypes] = useState();
   const [loading, setLoading] = useState(true);
 
-  const [pin, setPin] = useState("0000")
+  const [pin, setPin] = useState("0000");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalEdit, setModalEdit] = useState({ id: 0, name: 0, tipo: 0 });
+
+  
 
   const handleOpenModal = (row) => {
     setModalEdit(row);
@@ -56,8 +58,8 @@ const Colaboradores = () => {
 
   const createPin = () => {
     const generatedPin = Math.floor(1000 + Math.random() * 9000);
-    setPin(generatedPin)
-  }
+    setPin(generatedPin);
+  };
 
   const handleCloseModal = () => setModalOpen(false);
 
@@ -94,6 +96,7 @@ const Colaboradores = () => {
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
+            sx={{ backgroundColor: "#e3f2fd" }}
           >
             <Typography>
               <AddCircleIcon sx={{ verticalAlign: "middle", mr: 2 }} />
@@ -103,27 +106,47 @@ const Colaboradores = () => {
           <AccordionDetails
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Box sx={{ gap: 2, display: "flex" }}>
-              <TextField label="Nome" size="small" />
-              <TextField label="PIN" size="small" value={pin} onChange={(e) => setPin(e.target.value)}/>
-              <Button startIcon={<LoopIcon size="small" />} onClick={createPin}>Gerar PIN</Button>
-              <FormControl sx={{ minWidth: 200 }}>
-                <InputLabel id="posto">Posto de trabalho</InputLabel>
-                <Select
+            <Box sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <TextField label="Nome" size="small" sx={{width: 400}}/>
+                <TextField label="CPF" size="small" />
+              </Box>
+              <Box sx={{display: "flex"}}>
+                <TextField
+                  label="PIN"
+                  sx={{ width: 64 }}
                   size="small"
-                  labelId="posto"
-                  value="0"
-                  label="Posto de trabalho"
-                  autoWidth
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                />
+                <Button
+                  startIcon={<LoopIcon size="small" />}
+                  onClick={createPin}
+                >
+                  Gerar PIN
+                </Button>
+                <FormControl sx={{ minWidth: 200, ml: 8}}>
+                  <InputLabel id="posto">Posto de trabalho</InputLabel>
+                  <Select
+                    size="small"
+                    labelId="posto"
+                    value="0"
+                    label="Posto de trabalho"
+                    autoWidth
                   >
-                    {!colabTypes && <MenuItem key="none" value="0">{colabTypes ? "Nenhum" : "Carregando..."}</MenuItem>}
-                  {colabTypes?.map((type, index) => (
-                    <MenuItem key={index} value={type.id}>
-                      {colabTypes.find((id) => id.id === type.id).name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    {!colabTypes && (
+                      <MenuItem key="none" value="0">
+                        {colabTypes ? "Nenhum" : "Carregando..."}
+                      </MenuItem>
+                    )}
+                    {colabTypes?.map((type, index) => (
+                      <MenuItem key={index} value={type.id}>
+                        {colabTypes.find((id) => id.id === type.id).name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
             </Box>
             <Button
               size="small"
@@ -135,14 +158,20 @@ const Colaboradores = () => {
           </AccordionDetails>
         </Accordion>
 
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} sx={{ mt: 2 }}>
+          <Table
+            sx={{ minWidth: 650 }}
+            aria-label="lista colaboradores"
+            size="small"
+          >
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="left">Nome</TableCell>
-                <TableCell align="left">Posto de trabalho</TableCell>
-                <TableCell align="right">Editar/Apagar</TableCell>
+                <StyledTableCell>ID</StyledTableCell>
+                <StyledTableCell align="left">Nome</StyledTableCell>
+                <StyledTableCell align="left">
+                  Posto de trabalho
+                </StyledTableCell>
+                <StyledTableCell align="right">Editar/Apagar</StyledTableCell>
               </TableRow>
             </TableHead>
 
@@ -150,18 +179,18 @@ const Colaboradores = () => {
               {!loading ? (
                 <>
                   {colabs.map((row) => (
-                    <TableRow
+                    <StyledTableRow
                       key={row.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row">
+                      <StyledTableCell component="th" scope="row">
                         {row.id}
-                      </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">
+                      </StyledTableCell>
+                      <StyledTableCell align="left">{row.name}</StyledTableCell>
+                      <StyledTableCell align="left">
                         {colabTypes.find((id) => id.id === row.colabType).name}
-                      </TableCell>
-                      <TableCell align="right">
+                      </StyledTableCell>
+                      <StyledTableCell align="right">
                         <Button
                           onClick={() => handleOpenModal(row)}
                           size="small"
@@ -169,8 +198,8 @@ const Colaboradores = () => {
                         >
                           Editar
                         </Button>
-                      </TableCell>
-                    </TableRow>
+                      </StyledTableCell>
+                    </StyledTableRow>
                   ))}
                 </>
               ) : (
@@ -274,7 +303,8 @@ const Colaboradores = () => {
                   name="tipo"
                   label="Posto de trabalho"
                   onChange={(e) => handleChange(e)}
-                >{colabTypes?.map((type, index) => (
+                >
+                  {colabTypes?.map((type, index) => (
                     <MenuItem key={index} value={type.id}>
                       {colabTypes.find((id) => id.id === type.id).name}
                     </MenuItem>
@@ -285,9 +315,17 @@ const Colaboradores = () => {
             <Box
               sx={{ mt: 2, justifyContent: "space-between", display: "flex" }}
             >
-              <TextField label="Alterar senha" size="small" />
+              {/* <TextField label="PIN" size="small" sx={{ width: 64 }}/><Button
+                  startIcon={<LoopIcon size="small" />}
+                  onClick={createPin}
+                >
+                  Gerar PIN
+                </Button> */}
+              <Button startIcon={<PersonOutlineOutlinedIcon />}>
+                Informações
+              </Button>
+
               <Button startIcon={<SaveIcon />}>Salvar</Button>
-              <Button startIcon={<DeleteForeverIcon />}>Apagar</Button>
               <Button startIcon={<CloseIcon />} onClick={handleCloseModal}>
                 Fechar
               </Button>

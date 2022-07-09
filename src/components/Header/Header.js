@@ -60,32 +60,34 @@ const Header = () => {
             {NOME_EMPRESA}
           </Typography>
 
-          <Box sx={{ flexGrow: 1, gap: 2, display: { xs: "none", md: "flex" } }}>
-           
-              <Button
-                component={Link}
-                to="/dashboard"
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                Dashboard
-              </Button>
-              <Button sx={{ my: 2, color: "white", display: "block" }}>
-                Pedidos
-              </Button>
-              <Button
-                sx={{ my: 2, color: "white", display: "block" }}
-                onClick={clickCadastro}
-              >
-                Cadastros
-              </Button>
-              <Button
-               component={Link}
-               to="/kanban"
-                sx={{ my: 2, color: "white", display: "block" }}
-              >Kanban
-              </Button>
-           </Box>
-          {admin && (
+          <Box
+            sx={{ flexGrow: 1, gap: 2, display: { xs: "none", md: "flex" } }}
+          >
+            <Button
+              component={Link}
+              to="/dashboard"
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Dashboard
+            </Button>
+            <Button sx={{ my: 2, color: "white", display: "block" }}>
+              Pedidos
+            </Button>
+            <Button
+              sx={{ my: 2, color: "white", display: "block" }}
+              onClick={clickCadastro}
+            >
+              Cadastros
+            </Button>
+            <Button
+              component={Link}
+              to="/kanban"
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Kanban
+            </Button>
+          </Box>
+          {admin ? (
             <Box sx={{ flexGrow: 0, display: "flex" }}>
               <Button
                 sx={{ my: 2, color: "white" }}
@@ -96,7 +98,7 @@ const Header = () => {
                 Configurações
               </Button>
             </Box>
-          )}
+          ) : (<Box sx={{flexGrow: 0, display: "flex"}}><Typography>Usuário: SUPERVISOR</Typography></Box>)}
         </Toolbar>
         <Menu
           id="menuCadastro"

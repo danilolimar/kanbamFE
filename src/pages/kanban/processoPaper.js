@@ -7,7 +7,7 @@ const ProcessoPaper = ({ processo, children }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: ItemTypes.CARD,
-    drop: () => ({name: processo}),
+    drop: () => ({ name: processo }),
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -27,7 +27,7 @@ const ProcessoPaper = ({ processo, children }) => {
       role={"Processo"}
       sx={{ minWidth: "300px", py: 2, px: 1, backgroundColor }}
     >
-      <Typography>Processo: {processo}</Typography>
+      <Typography variant="h6">{processo}</Typography>
       {children}
     </Paper>
   );

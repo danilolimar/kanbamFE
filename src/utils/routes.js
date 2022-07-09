@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Route, Navigate, Routes as BrowserRouter } from "react-router-dom";
 import { Context } from "../context/authContext";
 import Admin from "../pages/admin/admin";
+import Colaborador from "../pages/colaborador/colaborador";
 import Colaboradores from "../pages/colaboradores/colaboradores";
 import Dashboard from "../pages/dashboard/dashboard";
 import Kanban from "../pages/kanban/kanban";
@@ -47,6 +48,7 @@ const Routes = () => {
       <Route path="/colaboradores" element={<Colaboradores />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/kanban" element={<Kanban />} />
+      <Route path="/colaborador" element={<Colaborador />} />
     </BrowserRouter>
   );
 };
